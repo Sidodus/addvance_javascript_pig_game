@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="../../bootstrap/src/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../../bootstrap/src/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="style.css">
+
+    <title>Pig Game</title>
+</head>
+
+<body>
+    <div class="wrapper clearfix">
+        <div class="player-0-panel">
+            <div class="player-name" id="name-0">Player 1</div>
+            <div class="player-score" id="score-0">0</div>
+            <div class="player-current-box">
+                <div class="player-current-label">Current</div>
+                <div class="player-current-score" id="current-0">0</div>
+            </div>
+        </div>
+
+        <div class="player-1-panel">
+            <div class="player-name" id="name-1">Player 2</div>
+            <div class="player-score" id="score-1">0</div>
+            <div class="player-current-box">
+                <div class="player-current-label">Current</div>
+                <div class="player-current-score" id="current-1">0</div>
+            </div>
+        </div>
+
+        <button class="btn-new"><i style="font-size: 1.5em" class="fa fa-plus-circle"></i>New game</button>
+        <button class="btn-roll"><i style="font-size: 1.5em" class="fa fa-recycle"></i>Roll dice</button>
+        <button class="btn-hold"><i style="font-size: 1.5em" class="fa fa-download"></i>Hold</button>
+
+        <img src="dice-6.png" alt="Dice" class="dice">
+    </div>
+
+    <!--Button To Open Modal-->
+    <button style="display: none" type="button" class="btn btn-primary btnClose" data-toggle="modal" data-target="#myModal"></button>
+
+    <!--MODAL-->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content p-3">
+                <!--modal Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                </div>
+                <!--modal body-->
+                <div class="modal-body text-light text-center">
+                    <p class="lead" id="modal-body-id"><span id="playerID"></span><span id="modal-body-span"></span></p>
+                </div>
+                <!--modal footer-->
+                <div class="modal-footer pt-5">
+                    <button type="button" class="btn btn-danger" id="modal-footer" data-dismiss="modal"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="bootstrap/src/js/jquery.min.js"></script>
+    <script src="bootstrap/src/js/popper.min.js"></script>
+    <script src="bootstrap/src/js/tether.min.js"></script>
+    <script src="bootstrap/src/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
