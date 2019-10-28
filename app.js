@@ -284,6 +284,27 @@ let AppCtrl = (function (stateCtrl, uiCtrl) {
             let currentScoresTotal = 0;
             if (randomizeDiceResults.randomDiceNumber === 0) {
 
+                // Change Displayed Dice & Total
+                document.querySelector(UISelectors.displayDice).setAttribute('src', randomizeDiceResults.randomDice);
+
+                // Play Fault Audio
+                let audio = new Audio('Wrong-answer-sound-effect.mp3');
+                audio.play();
+
+                // Change Background Image
+                document.body.style.background = "url('back-2.png')";
+
+                // Reset BG & Dice After 1.25Sec
+                setTimeout(function(){
+                    // Reset Background Image
+                    document.body.style.background = "linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(back.jpg)";
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundSize = 'cover';
+
+                    // Change Displayed Dice & Total
+                    document.querySelector(UISelectors.displayDice).setAttribute('src', UISelectors.dice6);
+                }, 1250)
+
                 // Reset currentScoreField To 0
                 let currentScoreFieldArrLength = currentScoreFieldArr.length;
                 currentScoreFieldArr.splice(0, currentScoreFieldArrLength);
@@ -300,6 +321,11 @@ let AppCtrl = (function (stateCtrl, uiCtrl) {
                 }
 
             } else {
+//                // Reset Background Image
+//                document.body.style.background = "linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(back.jpg)";
+//                document.body.style.backgroundPosition = 'center';
+//                document.body.style.backgroundSize = 'cover';
+
                 currentScoreFieldArr.push(randomizeDiceResults.randomDiceNumber);
 //                console.log('currentScoreFieldArr', currentScoreFieldArr);
 
