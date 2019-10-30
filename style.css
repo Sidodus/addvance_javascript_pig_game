@@ -103,7 +103,7 @@ body {
     font-size: 30px;
 }
 
-button {
+button, #end-score {
     position: absolute;
     width: 200px;
     left: 50%;
@@ -139,6 +139,8 @@ i {
 }
 
 .btn-new { top: 45px;}
+#small-num { top: -3px; left: 279px;}
+#end-score { top: 5px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
@@ -156,4 +158,3 @@ i {
     font-weight: bolder;
     color: darkgoldenrod;
 }
-/*.winner .player-name { font-weight: bolder; color: #EB4D4D; }*/
