@@ -358,10 +358,7 @@ let UICtrl = (function () {
         modalBody: document.querySelector('.modal-body'),
         modalBodySpan: document.querySelector('#modal-body-span'),
         playerID: document.querySelector('#playerID'),
-        //        modalBodyId: document.querySelector('#modal-body-id'),
-        modalFooter: document.getElementById('modal-footer'),
-
-        newName: JSON.parse(localStorage.getItem('Piggy Game Player Name'))
+        modalFooter: document.getElementById('modal-footer')
     };
 
     // Return Public Methods
@@ -494,7 +491,7 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
         }
 
         if (globalScore1 >= inputValue) {
-            const myName = UISelectors.newName;
+            const myName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
             // Alert Game Over & Hide Roll & Hold BTN
             document.querySelector('.modal-body').classList.remove('bg-warning');
             document.querySelector('.modal-body').classList.add('bg-primary');
@@ -585,7 +582,7 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             selectRollDiceBTN.style.display = 'inline-block';
             selectHoldBTN.style.display = 'inline-block';
             selectPlayer0.textContent = 'Computer';
-            selectPlayer1.textContent = UISelectors.newName;
+            selectPlayer1.textContent = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
             selectPlayer0.classList.remove('winner');
             selectPlayer1.classList.remove('winner');
 

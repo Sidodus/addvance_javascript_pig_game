@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
         //        console.log('Not Available');
         localStorage.setItem('Piggy Game Player Name', 'Player 1')
     } else {
-        const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
-        document.querySelector('#name-1').textContent = initName;
+//        const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
+        document.querySelector('#name-1').textContent = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
     }
 
     // Display New End Score If Any On DOM Start
@@ -244,8 +244,8 @@ document.querySelector('.change-name').addEventListener('click', function () {
                     console.log(namePrompt);
                     localStorage.setItem('Piggy Game Player Name', JSON.stringify(namePrompt));
                     // Retrive New Name From Storage
-                    const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
-                    document.querySelector('#name-1').textContent = initName;
+//                    const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
+                        document.querySelector('#name-1').textContent = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
 
                     // Clear Scores  And  Start On A New Slate
                     localStorage.setItem('Computer Win', '0');
