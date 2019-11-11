@@ -224,7 +224,7 @@ document.querySelector('.change-name').addEventListener('click', function () {
             console.log('EMPTY');
         } else {
             let namePromptToUpperCase = namePrompt.toUpperCase();
-            let storageNameToUpperCase = JSON.parse(localStorage.getItem('Piggy Game Player Name')).toUpperCase()
+            let storageNameToUpperCase = localStorage.getItem('Piggy Game Player Name').toUpperCase()
             if (namePromptToUpperCase === storageNameToUpperCase) {
                 console.log('Same Name')
             } else {
@@ -245,7 +245,7 @@ document.querySelector('.change-name').addEventListener('click', function () {
                     localStorage.setItem('Piggy Game Player Name', JSON.stringify(namePrompt));
                     // Retrive New Name From Storage
 //                    const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
-                        document.querySelector('#name-1').textContent = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
+                        document.querySelector('#name-1').textContent = localStorage.getItem('Piggy Game Player Name');
 
                     // Clear Scores  And  Start On A New Slate
                     localStorage.setItem('Computer Win', '0');
