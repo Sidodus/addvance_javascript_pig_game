@@ -1,4 +1,4 @@
-/**********************************************
+﻿/**********************************************
 *** GENERAL
 **********************************************/
 
@@ -16,7 +16,7 @@
 }
 
 body {
-    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(back.jpg);
+    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(img/back.jpg);
     background-size: cover;
     background-position: center;
     font-family: Lato;
@@ -24,6 +24,20 @@ body {
     position: relative;
     height: 100vh;
     color: #555;
+}
+
+#ratio, #ratio1 {
+    color: coral;
+    position: absolute;
+    top: 17%;
+    transform: translateX(444%);
+}
+
+#ratio-span, #ratio-span1 {
+    color: coral;
+    position: absolute;
+    top: 22%;
+    transform: translateX(472%);
 }
 
 .wrapper {
@@ -45,6 +59,12 @@ body {
     padding: 100px;
 }
 
+/*.player-1-panel {*/
+/*    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+-(White)4Profile.png);*/
+/*    background-image: url(img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+.png)*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*}
 
 
 /**********************************************
@@ -103,7 +123,7 @@ body {
     font-size: 30px;
 }
 
-button, #end-score {
+button, #end-score, #new-end-score, #loading {
     position: absolute;
     width: 200px;
     left: 50%;
@@ -141,6 +161,7 @@ i {
 .btn-new { top: 45px;}
 #small-num { top: -3px; left: 279px;}
 #end-score { top: 5px;}
+#new-end-score { top: 5px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
@@ -157,4 +178,31 @@ i {
     background-color: #f7f7f7;
     font-weight: bolder;
     color: darkgoldenrod;
+}
+
+#new-end-score {
+    left: 72%;
+    font-weight: 900;
+}
+
+.auto-play {
+    transform: translateX(390%);
+    margin-top: 7px;
+    width: 100px;
+    left: 50%;
+}
+
+.manual-play {
+    transform: translateX(285%);
+    margin-top: 7px;
+    width: 100px;
+    left: 50%;
+}
+
+#status-text {
+    position: absolute;
+    transform: translateX(205%);
+    margin-top: -22px;
+    width: 100px;
+    left: 50%;
 }

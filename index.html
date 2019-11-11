@@ -1,8 +1,22 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">-->
+
+    <meta name="application-name" content="Advance Pig Game">
+    <meta name="theme-color" content="#4285f4">
+    <meta name="description" content="Advance Pig Game Is Re-Written By Saheed Odulaja As A JavaScript Coding Exercise. Original Design By Haarry Beckwith (codepen.io/fun/pen/wJwqJp)">
+    <meta name="robots" content="index,follow">
+    <meta name="generator" content="program">
+    <meta name="subject" content="JavaScript Coding Exercise By Saheed Odulaja">
+    <meta name="rating" content="General">
+    <link rel="me" href="https://github.com/Sisodus/" type="text/html">
+    <link rel="me" href="https://twitter.com/SaheedOdulaja">
+    <link rel="me" href="https://facebook.com/sidodus">
+
     <link href="bootstrap/src/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="bootstrap/src/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link type="text/css" rel="stylesheet" href="style.css">
@@ -10,10 +24,10 @@
     <title>Pig Game</title>
 </head>
 
-    <body>
+<body class="add">
     <div class="wrapper clearfix">
         <div class="player-0-panel">
-            <div class="player-name" id="name-0">Player 1</div>
+            <div class="player-name" id="name-0">Computer</div>
             <div class="player-score" id="score-0">0</div>
             <div class="player-current-box">
                 <div class="player-current-label">Current</div>
@@ -22,7 +36,7 @@
         </div>
 
         <div class="player-1-panel">
-            <div class="player-name" id="name-1">Player 2</div>
+            <div class="player-name" id="name-1">Player 1</div>
             <div class="player-score" id="score-1">0</div>
             <div class="player-current-box">
                 <div class="player-current-label">Current</div>
@@ -31,12 +45,28 @@
         </div>
 
         <button class="btn-new"><i style="font-size: 1.5em" class="fa fa-plus-circle"></i>New game</button>
-        <button id="small-num"><label for="end-score"> Set Winniing Number. Default is 50 </label></button>
-        <input type="number" id="end-score" style="background-color: lightgray" placeholder="End Game @ 50">
+        <button id="small-num"><label for="end-score"> Set Winning Number. Default is 50 </label></button>
+
+        <button class="btn btn-sm btn-primary auto-play">Computer Auto Play</button>
+        <button class="btn btn-sm btn-primary manual-play">Manual Play</button>
+        <br>
+        <p id="status-text"></p>
+
+
+
+        <h4 id="ratio"> <div id="win-ratio">  </div> </h4>
+        <h4 id="ratio-span"> <span id="computer-ratio"> </span> <span id="human-ratio"> </span> </h4>
+<!--
+        <h4 id="ratio1"> <div id="win-ratio1">  </div> </h4>
+        <h4 id="ratio-span1"> <span id="computer-ratio1"> </span> <span id="human-ratio1"> </span> </h4>
+-->
+
+        <input type="number" id="end-score" style="background-color: lightgray" placeholder="End Game @ 50"><span id="new-end-score">New End Score No Here</span>
         <button class="btn-roll"><i style="font-size: 1.5em" class="fa fa-recycle"></i>Roll dice</button>
         <button class="btn-hold"><i style="font-size: 1.5em" class="fa fa-download"></i>Hold</button>
+        <img src="img/giphy2.gif" id="computer-playing" alt="Computer Playing" style="display: none">
 
-        <img src="dice-6.png" alt="Dice" class="dice">
+        <img src="img/dice-6.png" alt="Dice" class="dice">
     </div>
 
     <!--Button To Open Modal-->
@@ -63,10 +93,13 @@
     </div>
 
     <script src="bootstrap/src/js/jquery.min.js"></script>
-    <script src="bootstrap/src/js/popper.min.js"></script>
-    <script src="bootstrap/src/js/tether.min.js"></script>
     <script src="bootstrap/src/js/bootstrap.min.js"></script>
+    <script src="attrchange.js"></script>
+<!--    <script src="attrchange_ext.js"></script>-->
+    <script src="computer.js"></script>
+    <script src="manual.js"></script>
     <script src="app.js"></script>
+
 </body>
 
 </html>
