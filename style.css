@@ -59,14 +59,6 @@ body {
     padding: 100px;
 }
 
-/*.player-1-panel {*/
-/*    background-image: linear-gradient(rgba(62, 20, 20, 0.4), rgba(62, 20, 20, 0.4)), url(img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+-(White)4Profile.png);*/
-/*    background-image: url(img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+.png)*/
-/*    background-size: cover;*/
-/*    background-position: center;*/
-/*}
-
-
 /**********************************************
 *** PLAYERS
 **********************************************/
@@ -203,6 +195,13 @@ i {
     position: absolute;
     transform: translateX(205%);
     margin-top: -22px;
+    width: 100px;
+    left: 50%;
+}
+
+.change-name {
+    transform: translateX(390%);
+    margin-top: 37px;
     width: 100px;
     left: 50%;
 }

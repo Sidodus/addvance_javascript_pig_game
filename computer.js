@@ -13,8 +13,9 @@ GAME UPDATE:
 
 Game Play With Computer Enabled.
 Players Can Decide To Play Alone Or Play With Computer Just With A Click Of A Button (Default Play Is Manual Play).
-Players Can Set A New End Game Number. You Only Have To Set It Once (But can Change It At Any Time);
-Players Winning Ratio Is Calculated And Dispayed On Game Load
+Players Can Now Set A New End Game Number. You Only Have To Set It Once (But can Change It At Any Time);
+Players Winning Ratio Is Calculated And Dispayed On Game Load And On Game Win/Lose.
+Players Can Now Set Their Prefered Name.
 */
 
 let ComputerCtrl = (function () {
@@ -65,6 +66,11 @@ let ComputerCtrl = (function () {
                 getUISelectors.holdBTN.style.display = 'block';
 
                 // Adjust Background
+                getUISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+                getUISelectors.player1Panel.style.backgroundSize = 'cover';
+                getUISelectors.player1Panel.style.backgroundPosition = 'center';
+
+                // Adjust Background
                 getUISelectors.player0Panel.style.background = '';
                 getUISelectors.player0Panel.style.color = 'black';
 
@@ -84,6 +90,9 @@ let ComputerCtrl = (function () {
             getUISelectors.holdBTN.style.display = 'none';
 
             // Adjust Background
+            getUISelectors.player1Panel.style.background = '';
+
+            // Adjust Background
             getUISelectors.player0Panel.style.background = 'url("img/giphy2.gif")';
             getUISelectors.player0Panel.style.color = 'white';
 
@@ -96,7 +105,7 @@ let ComputerCtrl = (function () {
             let randomNum = Math.floor(Math.random() * 4) + 1;
 //            console.log('MAIN RANDOM NUMBER IS: ', randomNum)
 
-            console.trace()
+//            console.trace()
             // Set Global Delay Of 1.8Sec Before Computer Starts Playing
             setTimeout(function () { //-------------------------------------------
 
@@ -350,7 +359,9 @@ let UICtrl = (function () {
         modalBodySpan: document.querySelector('#modal-body-span'),
         playerID: document.querySelector('#playerID'),
         //        modalBodyId: document.querySelector('#modal-body-id'),
-        modalFooter: document.getElementById('modal-footer')
+        modalFooter: document.getElementById('modal-footer'),
+
+        newName: JSON.parse(localStorage.getItem('Piggy Game Player Name'))
     };
 
     // Return Public Methods
@@ -384,24 +395,6 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
         UISelectors.holdBTN.addEventListener('click', holdPlay);
 
     } // END OF allEvents()
-
-//    const displayRatio = function(){
-//        // Display Win Ratio
-//        let comuterWin = Number(localStorage.getItem('Computer Win'));
-//        let humanWin = Number(localStorage.getItem('Human Win'));
-//
-//        if(comuterWin === 0 && humanWin === 0){
-//            return
-//        }else{
-//            let compWinPercent = comuterWin / (comuterWin + humanWin) * 100;
-//            let humanWinPercent = humanWin / (comuterWin + humanWin) * 100;
-//
-//            console.log('compWinPercent ', compWinPercent, '\n', 'humanWinPercent ', humanWinPercent);
-//            document.getElementById('win-ratio').textContent = `Win Ratio`;
-//            document.getElementById('computer-ratio').textContent = `${compWinPercent}% `;
-//            document.getElementById('human-ratio').textContent = ` ${humanWinPercent}%`;
-//        }
-//    } // END OF displayRatio
 
     // Stop Game0
     const winGame0 = function () {
@@ -444,10 +437,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             setTimeout(function () {
                 audio.play()
                     .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                     .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
             }, 10);
 
@@ -464,6 +457,22 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             }else {
                 comuterWinPoints = Number(comuterWin) + 1;
                 localStorage.setItem('Computer Win', comuterWinPoints);
+
+                // Retrive and Display Win Ratio
+                let comuterWon = Number(localStorage.getItem('Computer Win'));
+                let humanWon = Number(localStorage.getItem('Human Win'));
+
+                if(comuterWon === 0 && humanWon === 0){
+                    return
+                }else{
+                    let compWonPercent = (comuterWon / (comuterWon + humanWon) * 100).toFixed()
+                    let humanWonPercent = (humanWon / (comuterWon + humanWon) * 100).toFixed()
+
+                    console.log('compWinPercent ', compWonPercent, '\n', 'humanWinPercent ', humanWonPercent);
+                    document.getElementById('win-ratio').textContent = `Win Ratio`;
+                    document.getElementById('computer-ratio').textContent = `${compWonPercent}% `;
+                    document.getElementById('human-ratio').textContent = ` ${humanWonPercent}%`;
+                }
 
 //                // Display Ratio To UI
 //                displayRatio()
@@ -485,12 +494,13 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
         }
 
         if (globalScore1 >= inputValue) {
+            const myName = UISelectors.newName;
             // Alert Game Over & Hide Roll & Hold BTN
             document.querySelector('.modal-body').classList.remove('bg-warning');
             document.querySelector('.modal-body').classList.add('bg-primary');
             document.querySelector('#modal-body-span').style.color = 'white';
             UISelectors.modalTitle.textContent = 'GAME OVER';
-            document.querySelector('#playerID').textContent = 'HURRAY!!! You Won The Game With ';
+            document.querySelector('#playerID').textContent = `HURRAY!!! ${myName} Won The Game With `;
             document.querySelector('#modal-body-span').innerHTML = `${globalScore1} Points`;
             UISelectors.modalFooter.textContent = 'Close';
             // Click Modal Btn
@@ -512,10 +522,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             setTimeout(function () {
                 audio.play()
                     .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                     .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
             }, 10);
 
@@ -532,6 +542,22 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             }else {
                 comuterWinPoints = Number(comuterWin) + 1;
                 localStorage.setItem('Human Win', comuterWinPoints);
+
+                // Retrive and Display Win Ratio
+                let comuterWon = Number(localStorage.getItem('Computer Win'));
+                let humanWon = Number(localStorage.getItem('Human Win'));
+
+                if(comuterWon === 0 && humanWon === 0){
+                    return
+                }else{
+                    let compWonPercent = (comuterWon / (comuterWon + humanWon) * 100).toFixed()
+                    let humanWonPercent = (humanWon / (comuterWon + humanWon) * 100).toFixed()
+
+//                    console.log('compWinPercent ', compWonPercent, '\n', 'humanWinPercent ', humanWonPercent);
+                    document.getElementById('win-ratio').textContent = `Win Ratio`;
+                    document.getElementById('computer-ratio').textContent = `${compWonPercent}% `;
+                    document.getElementById('human-ratio').textContent = ` ${humanWonPercent}%`;
+                }
 
 //                // Display Ratio To UI
 //                displayRatio()
@@ -558,8 +584,8 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             selectDisplayDice.setAttribute('src', UISelectors.dice6);
             selectRollDiceBTN.style.display = 'inline-block';
             selectHoldBTN.style.display = 'inline-block';
-            selectPlayer0.textContent = 'Player 0';
-            selectPlayer1.textContent = 'Player 1';
+            selectPlayer0.textContent = 'Computer';
+            selectPlayer1.textContent = UISelectors.newName;
             selectPlayer0.classList.remove('winner');
             selectPlayer1.classList.remove('winner');
 
@@ -588,34 +614,13 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
 
             if (endGame === true) {
 
-//                // Add Winning Point
-//                if(UISelectors.player0Panel.classList.contains('active')){
-//                    // Save Win
-//                    let comuterWin = Number(localStorage.getItem('Human Win'));
-//                    let comuterWinPoints = 0;
-//
-//                    if(comuterWin === 0){
-//                        localStorage.setItem('Human Win', '1')
-//                    }else {
-//                        comuterWinPoints = Number(comuterWin) + 1;
-//                        localStorage.setItem('Human Win', comuterWinPoints)
-//                    }
-//                }else{
-//                    // Save Win
-//                    let comuterWin = Number(localStorage.getItem('Computer Win'));
-//                    let comuterWinPoints = 0;
-//
-//                    if(comuterWin === 0){
-//                        localStorage.setItem('Computer Win', '1')
-//                    }else {
-//                        comuterWinPoints = Number(comuterWin) + 1;
-//                        localStorage.setItem('Computer Win', comuterWinPoints)
-//                    }
-//                }
-
                 resetUI();
             } else {
-                return;
+                // Disable Input Field
+                let globalScore0 = Number(UISelectors.globalScore0.textContent);
+                let globalScore1 = Number(UISelectors.globalScore1.textContent);
+
+                UISelectors.endScore.disabled = true;
             }
         }
     } // END OF  newGame()
@@ -629,10 +634,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
         setTimeout(function(){
             audio.play()
                 .then(function (aud) {
-                console.log(aud)
+//                console.log(aud)
             })
                 .catch(function (error) {
-                console.error(error)
+//                console.error(error)
             })
         }, 10)
 
@@ -745,10 +750,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
                         setTimeout(function(){
                             audio.play()
                                 .then(function (aud) {
-                                console.log(aud)
+//                                console.log(aud)
                             })
                                 .catch(function (error) {
-                                console.error(error)
+//                                console.error(error)
                             })
                         }, 10)
 
@@ -763,10 +768,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
                         setTimeout(function(){
                             audio.play()
                                 .then(function (aud) {
-                                console.log(aud)
+//                                console.log(aud)
                             })
                                 .catch(function (error) {
-                                console.error(error)
+//                                console.error(error)
                             })
                         }, 10)
 
@@ -843,10 +848,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
                 setTimeout(function(){
                     audio.play()
                         .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                         .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
                 }, 10)
 
@@ -893,10 +898,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
                 setTimeout(function(){
                     audio.play()
                         .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                         .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
                 }, 10)
 
@@ -924,10 +929,10 @@ let AppCtrl = (function (computerCtrl, stateCtrl, uiCtrl) {
             setTimeout(function(){
                 audio.play()
                     .then(function (aud) {
-                    console.log(aud)
+//                    console.log(aud)
                 })
                     .catch(function (error) {
-                    console.error(error)
+//                    console.error(error)
                 })
             }, 10)
 

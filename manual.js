@@ -13,8 +13,9 @@ GAME UPDATE:
 
 Game Play With Computer Enabled.
 Players Can Decide To Play Alone Or Play With Computer Just With A Click Of A Button (Default Play Is Manual Play).
-Players Can Set A New End Game Number. You Only Have To Set It Once (But can Change It At Any Time);
-Players Winning Ratio Is Calculated And Dispayed On Game Load
+Players Can Now Set A New End Game Number. You Only Have To Set It Once (But can Change It At Any Time);
+Players Winning Ratio Is Calculated And Dispayed On Game Load And On Game Win/Lose.
+Players Can Now Set Their Prefered Name.
 */
 
 let StateCtrl2 = (function () {
@@ -28,7 +29,7 @@ let StateCtrl2 = (function () {
 
             // Randomise Player To Start
             let randomNumber = Math.floor(Math.random() * 2);
-//            console.log('RandomNumber To Determine Which User Starts ...', randomNumber)
+            //            console.log('RandomNumber To Determine Which User Starts ...', randomNumber)
             //            randomNumber = 1 // always Start With Human ((((((((((((((((((((((()))))))))))))))))))))))
             let randomPlayer;
             if (randomNumber === 0) {
@@ -43,7 +44,17 @@ let StateCtrl2 = (function () {
                 getUISelectors.player0Panel.style.background = 'url("img/giphy2.gif")'; // !!!!!!!@@@@@@@@@@@!!!!!!!!
                 getUISelectors.player0Panel.style.color = 'white';
                 document.querySelector('#small-num').style.color = 'white';
+
+                // Adjust Background
+                getUISelectors.player1Panel.style.background = '';
             } else {
+                getUISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+                getUISelectors.player1Panel.style.backgroundSize = 'cover';
+                getUISelectors.player1Panel.style.backgroundPosition = 'center';
+
+                getUISelectors.player0Panel.style.background = '';
+
+
                 randomPlayer = getUISelectors.player1;
                 // Reset ClassName
                 getUISelectors.player0Panel.className = 'player-0-panel';
@@ -154,7 +165,9 @@ let UICtrl2 = (function () {
         modalBodySpan: document.querySelector('#modal-body-span'),
         playerID: document.querySelector('#playerID'),
         //        modalBodyId: document.querySelector('#modal-body-id'),
-        modalFooter: document.getElementById('modal-footer')
+        modalFooter: document.getElementById('modal-footer'),
+
+        newName: JSON.parse(localStorage.getItem('Piggy Game Player Name'))
     };
 
     // Return Public Methods
@@ -188,25 +201,6 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
         UISelectors.holdBTN.addEventListener('click', holdPlay);
 
     } // END OF allEvents()
-
-//    // Display Ration To UI
-//    const displayRatio = function () {
-//        // Display Win Ratio
-//        let comuterWin = Number(localStorage.getItem('Computer Win'));
-//        let humanWin = Number(localStorage.getItem('Human Win'));
-//
-//        if (comuterWin === 0 && humanWin === 0) {
-//            return
-//        } else {
-//            let compWinPercent = comuterWin / (comuterWin + humanWin) * 100;
-//            let humanWinPercent = humanWin / (comuterWin + humanWin) * 100;
-//
-//            console.log('compWinPercent ', compWinPercent, '\n', 'humanWinPercent ', humanWinPercent);
-//            document.getElementById('win-ratio').textContent = `Win Ratio`;
-//            document.getElementById('computer-ratio').textContent = `${compWinPercent}% `;
-//            document.getElementById('human-ratio').textContent = ` ${humanWinPercent}%`;
-//        }
-//    } // END OF displayRatio
 
     // Stop Game0
     const winGame0 = function () {
@@ -249,10 +243,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             setTimeout(function () {
                 audio.play()
                     .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                     .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
             }, 10)
 
@@ -270,8 +264,24 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 comuterWinPoints = Number(comuterWin) + 1;
                 localStorage.setItem('Computer Win', comuterWinPoints);
 
-//                // Display Ratio To UI
-//                displayRatio()
+                // Retrive and Display Win Ratio
+                let comuterWon = Number(localStorage.getItem('Computer Win'));
+                let humanWon = Number(localStorage.getItem('Human Win'));
+
+                if (comuterWon === 0 && humanWon === 0) {
+                    return
+                } else {
+                    let compWonPercent = (comuterWon / (comuterWon + humanWon) * 100).toFixed()
+                    let humanWonPercent = (humanWon / (comuterWon + humanWon) * 100).toFixed()
+
+//                    console.log('compWinPercent ', compWonPercent, '\n', 'humanWinPercent ', humanWonPercent);
+                    document.getElementById('win-ratio').textContent = `Win Ratio`;
+                    document.getElementById('computer-ratio').textContent = `${compWonPercent}% `;
+                    document.getElementById('human-ratio').textContent = ` ${humanWonPercent}%`;
+                }
+
+                //                // Display Ratio To UI
+                //                displayRatio()
             }
         }
     } // END OF winGame0
@@ -290,12 +300,13 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
         }
 
         if (globalScore1 >= inputValue) {
+            const myName1 = UISelectors.newName;
             // Alert Game Over & Hide Roll & Hold BTN
             document.querySelector('.modal-body').classList.remove('bg-warning');
             document.querySelector('.modal-body').classList.add('bg-primary');
             document.querySelector('#modal-body-span').style.color = 'white';
             UISelectors.modalTitle.textContent = 'GAME OVER';
-            document.querySelector('#playerID').textContent = 'HURRAY!!! You Won The Game With ';
+            document.querySelector('#playerID').textContent = `HURRAY!!! ${myName1} Won The Game With `;
             document.querySelector('#modal-body-span').innerHTML = `${globalScore1} Points`;
             UISelectors.modalFooter.textContent = 'Close';
             // Click Modal Btn
@@ -316,10 +327,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             setTimeout(function () {
                 audio.play()
                     .then(function (aud) {
-                        console.log(aud)
+//                        console.log(aud)
                     })
                     .catch(function (error) {
-                        console.error(error)
+//                        console.error(error)
                     })
             }, 10);
 
@@ -337,8 +348,24 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 comuterWinPoints = Number(comuterWin) + 1;
                 localStorage.setItem('Human Win', comuterWinPoints);
 
-//                // Display Ratio To UI
-//                displayRatio()
+                // Retrive and Display Win Ratio
+                let comuterWon = Number(localStorage.getItem('Computer Win'));
+                let humanWon = Number(localStorage.getItem('Human Win'));
+
+                if (comuterWon === 0 && humanWon === 0) {
+                    return
+                } else {
+                    let compWonPercent = (comuterWon / (comuterWon + humanWon) * 100).toFixed()
+                    let humanWonPercent = (humanWon / (comuterWon + humanWon) * 100).toFixed()
+
+                    console.log('compWinPercent ', compWonPercent, '\n', 'humanWinPercent ', humanWonPercent);
+                    document.getElementById('win-ratio').textContent = `Win Ratio`;
+                    document.getElementById('computer-ratio').textContent = `${compWonPercent}% `;
+                    document.getElementById('human-ratio').textContent = ` ${humanWonPercent}%`;
+                }
+
+                //                // Display Ratio To UI
+                //                displayRatio()
             }
         }
     } // END OF winGame1
@@ -357,18 +384,30 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
         //            console.log('selectCurrentScore0:', selectCurrentScore0.textContent);
         //            console.log('selectCurrentScore1:', selectCurrentScore1.textContent);
 
-        if (UISelectors.player0.classList.contains('active')) {
+        // Reset UI
+        const resetUIBG = function(){
+        if(UISelectors.player0Panel.classList.contains('active')){
+
             // Adjust Background
-            UISelectors.player0Panel.style.background = 'url("img/giphy2.gif")'; // !!!!!!!@@@@@@@@@!!!!!!!!
+            UISelectors.player0Panel.style.background = 'url("img/giphy2.gif")';
             UISelectors.player0Panel.style.color = 'white';
             document.querySelector('#small-num').style.color = 'white';
-        } else {
+
+            UISelectors.player1Panel.style.background = '';
+        }else{
+
+            UISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+            UISelectors.player1Panel.style.backgroundSize = 'cover';
+            UISelectors.player1Panel.style.backgroundPosition = 'center';
+
             // Adjust Background
             UISelectors.player0Panel.style.background = '';
             UISelectors.player0Panel.style.color = 'black';
 
             document.querySelector('#small-num').style.color = 'black';
         }
+        }
+
 
         // Enable Input Field
         UISelectors.endScore.disabled = false;
@@ -379,7 +418,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             selectRollDiceBTN.style.display = 'inline-block';
             selectHoldBTN.style.display = 'inline-block';
             selectPlayer0.textContent = 'Player 0';
-            selectPlayer1.textContent = 'Player 1';
+            selectPlayer1.textContent = UISelectors.newName;
             selectPlayer0.classList.remove('winner');
             selectPlayer1.classList.remove('winner');
 
@@ -392,8 +431,8 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             selectCurrentScore0.textContent = 0;
             selectCurrentScore1.textContent = 0;
 
-//            // Display Ratio To UI
-//            displayRatio()
+            //            // Display Ratio To UI
+            //            displayRatio()
         } //END OF resetUI()
 
         // selectRollDiceBTN.style.display === 'none'
@@ -401,17 +440,27 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             // Game Is Alredy Over So No Need To Confirm
             // Just End The Game
             resetUI();
+            resetUIBG();
 
         } else if (selectGlobalScore0.textContent == '0' && selectGlobalScore1.textContent == '0') {
             resetUI();
+            resetUIBG();
         } else {
             // Confirm Player Wants To End Game
             let endGame = confirm('Do You Want To End Game!!!') // \n You Would Lose Your Point');
 
             if (endGame === true) {
                 resetUI();
+                resetUIBG();
             } else {
-                return;
+                // Disable Input Field
+                let globalScore0 = Number(UISelectors.globalScore0.textContent);
+                let globalScore1 = Number(UISelectors.globalScore1.textContent);
+
+                UISelectors.endScore.disabled = true;
+
+                // Maanage UI BG
+                resetUIBG();
             }
         }
     } // END OF  newGame()
@@ -425,10 +474,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
         setTimeout(function () {
             audio.play()
                 .then(function (aud) {
-                    console.log(aud)
+//                    console.log(aud)
                 })
                 .catch(function (error) {
-                    console.error(error)
+//                    console.error(error)
                 })
         }, 10)
 
@@ -467,6 +516,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 // Adjust Background
                 UISelectors.player0Panel.style.background = '';
                 UISelectors.player0Panel.style.color = 'black';
+
+                UISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+                UISelectors.player1Panel.style.backgroundSize = 'cover';
+                UISelectors.player1Panel.style.backgroundPosition = 'center';
             } else {
                 UISelectors.currentScore1.textContent = 0;
                 UISelectors.player1Panel.classList.remove('active');
@@ -476,6 +529,8 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 UISelectors.player0Panel.style.background = 'url("img/giphy2.gif")';
                 UISelectors.player0Panel.style.color = 'white';
                 document.querySelector('#small-num').style.color = 'white';
+
+                UISelectors.player1Panel.style.background = '';
             }
         }, 1260)
     } // END OF wrongAnsCall()
@@ -502,7 +557,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 wrongAnsCall(diceNum)
             } else {
                 currentScoreFieldArr.push(randomizeDiceResults.randomDiceNumber);
-//                console.log('currentScoreFieldArr', currentScoreFieldArr);
+                //                console.log('currentScoreFieldArr', currentScoreFieldArr);
 
                 // Clear Current Sccore If A Number Is Rolled Twice In Succession
                 let secondToLastArray = currentScoreFieldArr[currentScoreFieldArr.length - 2];
@@ -528,7 +583,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                     currentScoreFieldArr.forEach(function (score) {
                         currentScoresTotal += score;
                     });
-//                    console.log('currentScoresTotal', currentScoresTotal);
+                    //                    console.log('currentScoresTotal', currentScoresTotal);
 
                     // Change Displayed Dice & Total
                     UISelectors.displayDice.setAttribute('src', randomizeDiceResults.randomDice);
@@ -541,6 +596,8 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                         UISelectors.player0Panel.style.color = 'white';
                         document.querySelector('#small-num').style.color = 'white';
 
+                        UISelectors.player1Panel.style.background = '';
+
                         UISelectors.currentScore0.textContent = currentScoresTotal;
 
                         // Play Sound
@@ -548,10 +605,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                         setTimeout(function () {
                             audio.play()
                                 .then(function (aud) {
-                                    console.log(aud)
+//                                    console.log(aud)
                                 })
                                 .catch(function (error) {
-                                    console.error(error)
+//                                    console.error(error)
                                 })
                         }, 10)
 
@@ -565,6 +622,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                         UISelectors.player0Panel.style.color = 'black';
                         document.querySelector('#small-num').style.color = 'black';
 
+                        UISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+                        UISelectors.player1Panel.style.backgroundSize = 'cover';
+                        UISelectors.player1Panel.style.backgroundPosition = 'center';
+
                         UISelectors.currentScore1.textContent = currentScoresTotal;
 
                         // Play Sound
@@ -572,10 +633,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                         setTimeout(function () {
                             audio.play()
                                 .then(function (aud) {
-                                    console.log(aud)
+//                                    console.log(aud)
                                 })
                                 .catch(function (error) {
-                                    console.error(error)
+//                                    console.error(error)
                                 })
                         }, 10)
 
@@ -642,8 +703,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
 
                     document.querySelector('#small-num').style.color = 'black';
 
-//                    console.log('globalScoreTotal0...', globalScoreTotal)
-//                    console.log('inputValue...', inputValue)
+                    UISelectors.player1Panel.style.background = '';
+
+                    //                    console.log('globalScoreTotal0...', globalScoreTotal)
+                    //                    console.log('inputValue...', inputValue)
                 } else {
                     //                        // Continue Game
                     UISelectors.player0Panel.classList.remove('active');
@@ -655,8 +718,12 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
 
                     document.querySelector('#small-num').style.color = 'black';
 
-//                    console.log('globalScoreTotal0...', globalScoreTotal)
-//                    console.log('inputValue...', inputValue)
+                    UISelectors.player1Panel.style.background = 'url("img/Saheed-Odulaja-JS-3D-Logo-JS-by-me+++.png")';
+                    UISelectors.player1Panel.style.backgroundSize = 'cover';
+                    UISelectors.player1Panel.style.backgroundPosition = 'center';
+
+                    //                    console.log('globalScoreTotal0...', globalScoreTotal)
+                    //                    console.log('inputValue...', inputValue)
                 }
 
                 // Play Sound
@@ -664,10 +731,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 setTimeout(function () {
                     audio.play()
                         .then(function (aud) {
-                            console.log(aud)
+//                            console.log(aud)
                         })
                         .catch(function (error) {
-                            console.error(error)
+//                            console.error(error)
                         })
                 }, 10)
 
@@ -703,8 +770,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
 
                     document.querySelector('#small-num').style.color = 'black';
 
-//                    console.log('globalScoreTotal1...', globalScoreTotal)
-//                    console.log('inputValue...', inputValue)
+                    UISelectors.player1Panel.style.background = '';
+
+                    //                    console.log('globalScoreTotal1...', globalScoreTotal)
+                    //                    console.log('inputValue...', inputValue)
                 } else {
                     // Continue Game
                     UISelectors.player1Panel.classList.remove('active');
@@ -715,8 +784,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                     UISelectors.player0Panel.style.color = 'white';
                     document.querySelector('#small-num').style.color = 'white';
 
-//                    console.log('globalScoreTotal1...', globalScoreTotal)
-//                    console.log('inputValue...', inputValue)
+                    UISelectors.player1Panel.style.background = '';
+
+                    //                    console.log('globalScoreTotal1...', globalScoreTotal)
+                    //                    console.log('inputValue...', inputValue)
                 }
 
                 // Play Sound
@@ -724,10 +795,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
                 setTimeout(function () {
                     audio.play()
                         .then(function (aud) {
-                            console.log(aud)
+//                            console.log(aud)
                         })
                         .catch(function (error) {
-                            console.error(error)
+//                            console.error(error)
                         })
                 }, 10)
 
@@ -754,10 +825,10 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             let audio = new Audio('audio/Game%20Over3.mp3');
             audio.play()
                 .then(function (aud) {
-                    console.log(aud)
+//                    console.log(aud)
                 })
                 .catch(function (error) {
-                    console.error(error)
+//                    console.error(error)
                 }, 10)
 
             setTimeout(function () {
@@ -796,7 +867,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             localStorage.setItem('End Score', JSON.stringify(endScoreBlurValue))
             newEndScoreBlurValue = endScoreBlurValue;
 
-//            console.log('Storage is Greater Than Init NEW', newEndScoreBlurValue)
+            //            console.log('Storage is Greater Than Init NEW', newEndScoreBlurValue)
 
             return {
                 newEndScoreBlurValue
@@ -805,7 +876,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             localStorage.setItem('End Score', JSON.stringify(endScoreBlurValue))
             newEndScoreBlurValue = endScoreBlurValue;
 
-//            console.log('Less Than Storage But Greater Than Init NEW', newEndScoreBlurValue)
+            //            console.log('Less Than Storage But Greater Than Init NEW', newEndScoreBlurValue)
 
             return {
                 newEndScoreBlurValue
@@ -814,7 +885,7 @@ let AppCtrl2 = (function (stateCtrl2, uiCtrl2) {
             localStorage.setItem('End Score', JSON.stringify(endScoreInitValue))
             newEndScoreBlurValue = endScoreInitValue;
 
-//            console.log('OTHERS NEW', newEndScoreBlurValue)
+            //            console.log('OTHERS NEW', newEndScoreBlurValue)
 
             return {
                 newEndScoreBlurValue
