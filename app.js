@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('Piggy Game Player Name', 'Player 1')
     } else {
 //        const initName = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
-        document.querySelector('#name-1').textContent = JSON.parse(localStorage.getItem('Piggy Game Player Name'));
+        document.querySelector('#name-1').textContent = localStorage.getItem('Piggy Game Player Name');
     }
 
     // Display New End Score If Any On DOM Start
