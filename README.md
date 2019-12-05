@@ -1,4 +1,4 @@
-Addvance JavaScript Pig Game
+Advance JavaScript Pig Game
 ================================
 
 Advance Pig Game Development Using Module & Revealing Module Pattern
